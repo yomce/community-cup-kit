@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KRAFTON Community Cup Kit</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-panel" aria-label="Prototype navigation">
+        <div class="brand">
+          <div class="brand-mark">CK</div>
+          <div>
+            <p class="eyebrow">KRAFTON</p>
+            <h1>Community Cup Kit</h1>
+          </div>
+        </div>
+
+        <nav class="nav-tabs" aria-label="Main screens">
+          <button class="nav-tab is-active" type="button" data-view="setup">
+            <span class="tab-index">01</span>
+            대회 생성
+          </button>
+          <button class="nav-tab" type="button" data-view="dashboard">
+            <span class="tab-index">02</span>
+            라이브 대시보드
+          </button>
+          <button class="nav-tab" type="button" data-view="results">
+            <span class="tab-index">03</span>
+            결과 공유
+          </button>
+        </nav>
+
+        <div class="north-star">
+          <span>North Star Metric</span>
+          <strong>대회 완주율</strong>
+          <p>생성된 대회 중 최종 결과 공유까지 완료한 비율</p>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Assignment 3 Prototype</p>
+            <h2>초보 운영자를 위한 소규모 eSports 대회 운영 지원 툴</h2>
+          </div>
+          <div class="topbar-actions">
+            <button class="ghost-button" type="button" id="resetDemo">데모 초기화</button>
+            <button class="primary-button" type="button" data-view-jump="dashboard">라이브 보기</button>
+          </div>
+        </header>
+
+        <section class="status-strip" aria-label="Tournament snapshot">
+          <article>
+            <span>참가 규모</span>
+            <strong id="metricParticipants">48명</strong>
+            <small>30-50명 커뮤니티 컵</small>
+          </article>
+          <article>
+            <span>체크인 완료율</span>
+            <strong>87.5%</strong>
+            <small>42 / 48 완료</small>
+          </article>
+          <article>
+            <span>진행 리스크</span>
+            <strong>3건</strong>
+            <small>지연 2, 이의제기 1</small>
+          </article>
+          <article>
+            <span>결과 공유 준비</span>
+            <strong>자동 초안</strong>
+            <small>랭킹, 공지, 카드 생성</small>
+          </article>
+        </section>
+
+        <section class="view is-active" id="setupView" aria-labelledby="setupTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Tournament Setup</p>
+              <h3 id="setupTitle">기획부터 모집 페이지 발행까지 10분 안에 끝내기</h3>
+            </div>
+            <button class="primary-button" type="button" id="generateRulebook">AI 룰북 생성</button>
+          </div>
+
+          <div class="setup-grid">
+            <form class="tool-panel" id="setupForm">
+              <label>
+                게임
+                <select id="gameSelect">
+                  <option>PUBG: BATTLEGROUNDS</option>
+                  <option>PUBG MOBILE</option>
+                  <option>NEW STATE MOBILE</option>
+                </select>
+              </label>
+
+              <label>
+                참가자 수
+                <input id="participantRange" type="range" min="30" max="50" value="48" />
+                <span class="range-readout"><strong id="participantReadout">48</strong>명 예상</span>
+              </label>
+
+              <div class="field-group">
+                <span>경기 방식</span>
+                <div class="segmented" role="group" aria-label="Tournament format">
+                  <button class="segment is-selected" type="button" data-format="스쿼드 포인트 레이스">포인트 레이스</button>
+                  <button class="segment" type="button" data-format="싱글 엘리미네이션">싱글 토너먼트</button>
+                  <button class="segment" type="button" data-format="조별 리그">조별 리그</button>
+                </div>
+              </div>
+
+              <label>
+                대회 일정
+                <input id="scheduleInput" type="datetime-local" value="2026-05-23T19:00" />
+              </label>
+
+              <label>
+                운영 채널
+                <input id="channelInput" type="url" value="https://discord.gg/community-cup" />
+              </label>
+
+              <label>
+                운영자 경험 수준
+                <select id="experienceSelect">
+                  <option>처음 운영해요</option>
+                  <option>소규모 이벤트 경험 있음</option>
+                  <option>대회 운영 경험 있음</option>
+                </select>
+              </label>
+            </form>
+
+            <article class="tool-panel rulebook-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">AI Rulebook Draft</p>
+                  <h4>누락 리스크를 먼저 막는 룰북 초안</h4>
+                </div>
+                <span class="quality-chip">8개 항목 검토</span>
+              </div>
+
+              <div class="rule-summary" id="ruleSummary">
+                <p>게임, 인원, 방식, 일정 입력값을 바탕으로 체크인 기준과 노쇼 처리, 결과 제출, 이의제기 제한 시간을 자동 제안합니다.</p>
+              </div>
+
+              <ul class="checklist" id="riskChecklist">
+                <li class="done">체크인 마감 시간 명시</li>
+                <li class="done">결과 제출 인증 방식 포함</li>
+                <li class="warning">동점 처리 기준 확인 필요</li>
+                <li class="warning">이의제기 접수 채널 확인 필요</li>
+              </ul>
+
+              <div class="publish-row">
+                <button class="secondary-button" type="button" data-view-jump="dashboard">모집 페이지 발행</button>
+                <span>예상 생성 완료율 +18%p</span>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="dashboardView" aria-labelledby="dashboardTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Live Operations</p>
+              <h3 id="dashboardTitle">대회 당일 병목을 한 화면에서 처리하기</h3>
+            </div>
+            <button class="primary-button" type="button" id="advanceRound">다음 라운드 준비</button>
+          </div>
+
+          <div class="dashboard-grid">
+            <article class="tool-panel progress-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Check-in</p>
+                  <h4>참가 확정 현황</h4>
+                </div>
+                <strong>42 / 48</strong>
+              </div>
+              <div class="progress-track">
+                <span style="width: 87.5%"></span>
+              </div>
+              <div class="mini-stats">
+                <span>미체크인 6</span>
+                <span>대체 참가자 3</span>
+                <span>자동 알림 2회</span>
+              </div>
+            </article>
+
+            <article class="tool-panel alert-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Risk Queue</p>
+                  <h4>운영자 개입이 필요한 경기</h4>
+                </div>
+                <span class="danger-chip">3건</span>
+              </div>
+              <div class="alert-list">
+                <button type="button">
+                  <strong>Match A-03</strong>
+                  결과 제출 12분 지연
+                </button>
+                <button type="button">
+                  <strong>Match B-02</strong>
+                  스크린샷 불일치 신고
+                </button>
+                <button type="button">
+                  <strong>Lobby C</strong>
+                  미입장 참가자 2명
+                </button>
+              </div>
+            </article>
+
+            <article class="tool-panel match-board">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Round 2</p>
+                  <h4>매치 진행 상태</h4>
+                </div>
+                <span id="roundState">진행 중</span>
+              </div>
+              <div class="match-list" id="matchList"></div>
+            </article>
+
+            <article class="tool-panel runbook-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Operator Runbook</p>
+                  <h4>운영 체크리스트</h4>
+                </div>
+                <span>6 / 8 완료</span>
+              </div>
+              <ul class="timeline">
+                <li class="complete">체크인 마감 및 미참여자 자동 제외</li>
+                <li class="complete">Round 1 결과 검수</li>
+                <li class="active">Round 2 지연 경기 처리</li>
+                <li>다음 라운드 공지 자동 발송</li>
+                <li>최종 결과 카드 생성</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="resultsView" aria-labelledby="resultsTitle">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Result Sharing</p>
+              <h3 id="resultsTitle">운영 종료 후 커뮤니티 공유까지 자동 완성</h3>
+            </div>
+            <button class="primary-button" type="button" id="copyAnnouncement">공지 복사</button>
+          </div>
+
+          <div class="results-grid">
+            <article class="winner-panel">
+              <p class="eyebrow">Champion</p>
+              <h4>Team Blue Zone</h4>
+              <p>총점 86점, 치킨 2회, 평균 순위 2.3위</p>
+              <div class="winner-meta">
+                <span>참가 48명</span>
+                <span>진행 4라운드</span>
+                <span>완주율 100%</span>
+              </div>
+            </article>
+
+            <article class="tool-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Ranking</p>
+                  <h4>최종 순위</h4>
+                </div>
+                <span>자동 집계</span>
+              </div>
+              <table class="ranking-table">
+                <thead>
+                  <tr>
+                    <th>순위</th>
+                    <th>팀</th>
+                    <th>점수</th>
+                    <th>상태</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>Team Blue Zone</td>
+                    <td>86</td>
+                    <td>우승</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>Erangel Runners</td>
+                    <td>79</td>
+                    <td>확정</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>Miramar Crew</td>
+                    <td>73</td>
+                    <td>확정</td>
+                  </tr>
+                </tbody>
+              </table>
+            </article>
+
+            <article class="tool-panel announcement-panel">
+              <div class="panel-title">
+                <div>
+                  <p class="eyebrow">Community Post</p>
+                  <h4>결과 발표 공지 초안</h4>
+                </div>
+                <span id="copyState">준비됨</span>
+              </div>
+              <textarea id="announcementText" readonly>Community Cup #12가 종료되었습니다.
+
+우승: Team Blue Zone
+준우승: Erangel Runners
+3위: Miramar Crew
+
+총 48명의 참가자가 4라운드를 완주했고, 모든 결과 검수가 완료되었습니다.
+다음 대회 모집은 다음 주 금요일 19시에 시작됩니다.</textarea>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
